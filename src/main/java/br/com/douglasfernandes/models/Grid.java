@@ -2,6 +2,10 @@ package br.com.douglasfernandes.models;
 
 import java.util.ArrayList;
 
+import br.com.douglasfernandes.exceptions.AlreadyOccupedLocationException;
+import br.com.douglasfernandes.exceptions.GridLimitReachException;
+import br.com.douglasfernandes.exceptions.OutOfGridException;
+
 /**
  * Malha que representa o plano a ser explorado pelas sondas.
  * @author douglas.f.filho
@@ -42,11 +46,13 @@ public class Grid {
 	 * <br>São o ponto final da malha.
 	 * 
 	 */
-	public Grid(int xMinPosition, int yMinPosition, int xMaxPosition, int yMaxPosition) {
-		this.xMinPosition = xMinPosition;
-		this.yMinPosition = yMinPosition;
+	public Grid(int xMaxPosition, int yMaxPosition) {
+		this.xMinPosition = 0;
+		this.yMinPosition = 0;
 		this.xMaxPosition = xMaxPosition;
 		this.yMaxPosition = yMaxPosition;
+		
+		this.maxLotation = (yMaxPosition * xMaxPosition) - 1;
 	}
 	
 	public boolean isInsideLimit(int x, int y) {
@@ -58,8 +64,33 @@ public class Grid {
 		}
 	}
 	
-	public void addDiscover() {
-		
+	public void createDiscover(int x, int y, String movingDirection) throws AlreadyOccupedLocationException, OutOfGridException, GridLimitReachException  {
+		if((this.discoversOnTheGrid.size() < this.maxLotation)) {
+			if(isInsideLimit(x, y)) {
+				int lastId = 0;
+				for(Discover discover : this.discoversOnTheGrid) {
+					lastId = discover.getId();
+					if((discover.getPositionX() == x) && (discover.getPositionY() == y)) {
+						throw new AlreadyOccupedLocationException();
+					}
+				}
+				
+				lastId++;
+				
+				Discover discover = new Discover(lastId, x, y, movingDirection);
+				this.discoversOnTheGrid.add(discover);
+			}
+			else {
+				throw new OutOfGridException();
+			}
+		}
+		else {
+			throw new GridLimitReachException();
+		}
+	}
+
+	public ArrayList<Discover> getDiscoversOnTheGrid() {
+		return this.discoversOnTheGrid;
 	}
 	
 }
