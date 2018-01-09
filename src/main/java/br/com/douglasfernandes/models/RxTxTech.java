@@ -12,18 +12,29 @@ import java.util.regex.Pattern;
  * @author douglas.f.filho
  *
  */
-public class RXTech {
+public class RxTxTech {
 
 	private ArrayList<String> commands;
 	
-	public RXTech() {
+	/**
+	 * Construtor padrão do Transmissor/Receptor de informações das sondas.
+	 */
+	public RxTxTech() {
 		this.commands = new ArrayList<String>();
 	}
 	
+	/**
+	 * Adiciona um comando.
+	 * @param command
+	 */
 	public void setCommand(String command) {
 		this.commands.add(command);
 	}
 	
+	/**
+	 * Adiciona todos os comandos de um arquivo.
+	 * @param inputCard
+	 */
 	public void setCommands(String inputCard) {
 		try {
 			FileReader reader = new FileReader(new File(inputCard));
@@ -42,6 +53,11 @@ public class RXTech {
 		}
 	}
 	
+	/**
+	 * Auxilia a remover a leitura de espaços em branco do arquivo.
+	 * @param list
+	 * @return
+	 */
 	private String[] removeBlanks(String[] list) {
 		ArrayList<String> lista = new ArrayList<String>();
 		for(String item : list) {
@@ -59,6 +75,10 @@ public class RXTech {
 		return listaAsArray;
 	}
 	
+	/**
+	 * Envia comandos às sondas e obtém retorno da posição final de cada uma mediante instrução passada.
+	 * @return
+	 */
 	public ArrayList<String> sendCommands() {
 		String creationParam = commands.get(0);
 		commands.remove(0);

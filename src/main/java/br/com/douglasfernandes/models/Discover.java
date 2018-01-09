@@ -29,10 +29,10 @@ public class Discover {
 	 *
 	 */
 	public enum MovingDirection {
-		N("N"),
-		S("S"),
-		E("E"),
-		W("W");
+		N("N"),//Norte
+		S("S"),//Sul
+		E("E"),//Leste
+		W("W");//Oeste
 		
 		private String value;
 		
@@ -67,8 +67,8 @@ public class Discover {
 	 *
 	 */
 	public enum RotationDirection {
-		L("L"),
-		R("R");
+		L("L"),//Esquerda
+		R("R");//Direita
 		
 		private String value;
 		
@@ -97,6 +97,13 @@ public class Discover {
 		
 	}
 	
+	/**
+	 * Construtor padrão da sonda.
+	 * @param id = identificação única da sonda.
+	 * @param positionX = posição no eixo X.
+	 * @param positionY = posição no eixo Y.
+	 * @param direction = orientação geográfica.
+	 */
 	public Discover(int id, int positionX, int positionY, String direction) {
 		this.id = id;
 		this.positionX = positionX;
@@ -105,22 +112,42 @@ public class Discover {
 		this.direction = MovingDirection.getDirection(direction);
 	}
 	
+	/**
+	 * Obtenção da identificação única da sonda.
+	 * @return
+	 */
 	public int getId() {
 		return this.id;
 	}
 	
+	/**
+	 * Obtenção da posição da sonda no eixo X.
+	 * @return
+	 */
 	public int getPositionX() {
 		return this.positionX;
 	}
 	
+	/**
+	 * Obtenção da posição da sonda no eixo Y.
+	 * @return
+	 */
 	public int getPositionY() {
 		return this.positionY;
 	}
 	
+	/**
+	 * Obtenção da orientação geográfica da sonda.
+	 * @return
+	 */
 	public String getDirection() {
 		return this.direction.toString();
 	}
 	
+	/**
+	 * Rotacionar a sonda para esquerda ("L") ou direita ("R").
+	 * @param direction
+	 */
 	public void rotate(String direction) {
 		RotationDirection rotationDirection = RotationDirection.getDirection(direction);
 		
@@ -154,6 +181,12 @@ public class Discover {
 		}
 	}
 	
+	/**
+	 * Mover a sonda para frente.
+	 * @param grid = Usada para verificação de limites e possíveis colisões.
+	 * @throws OutOfGridException
+	 * @throws RiskOfDiscoverCollisionException
+	 */
 	public void move(Grid grid) throws OutOfGridException, RiskOfDiscoverCollisionException {
 		int x = this.positionX;
 		int y = this.positionY;

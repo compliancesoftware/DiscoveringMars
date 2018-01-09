@@ -1,5 +1,10 @@
 package br.com.douglasfernandes.exceptions;
 
+/**
+ * Exceção lançada em caso de leitura de parametro com movimento de rotação desconhecido.
+ * @author douglas.f.filho
+ *
+ */
 public class UnknowRotationDirection extends RuntimeException{
 
 	/**

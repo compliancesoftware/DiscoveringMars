@@ -1,5 +1,10 @@
 package br.com.douglasfernandes.exceptions;
 
+/**
+ * Exceção lançada na tentativa de criar uma sonda com orientação geografica desconhecida.
+ * @author douglas.f.filho
+ *
+ */
 public class UnknowMovingDirection extends RuntimeException{
 
 	/**

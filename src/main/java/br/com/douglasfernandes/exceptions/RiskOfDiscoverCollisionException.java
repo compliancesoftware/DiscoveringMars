@@ -1,5 +1,10 @@
 package br.com.douglasfernandes.exceptions;
 
+/**
+ * Exceção chamada caso haja risco de colisão de uma sonda com outra já existente na malha.
+ * @author douglas.f.filho
+ *
+ */
 public class RiskOfDiscoverCollisionException extends RuntimeException{
 
 	/**

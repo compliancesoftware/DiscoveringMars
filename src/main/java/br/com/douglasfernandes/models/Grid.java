@@ -55,6 +55,12 @@ public class Grid {
 		this.maxLotation = (yMaxPosition * xMaxPosition) - 1;
 	}
 	
+	/**
+	 * Verifica se o ponto x,y está dentro dos limites da malha.
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	public boolean isInsideLimit(int x, int y) {
 		if(x >= this.xMinPosition && x <= this.xMaxPosition && y >= this.yMinPosition && y <= this.yMaxPosition) {
 			return true;
@@ -64,6 +70,15 @@ public class Grid {
 		}
 	}
 	
+	/**
+	 * Cria uma sonda em determinado ponto da malha  com orientação pre estabelecida.
+	 * @param x
+	 * @param y
+	 * @param movingDirection
+	 * @throws AlreadyOccupedLocationException
+	 * @throws OutOfGridException
+	 * @throws GridLimitReachException
+	 */
 	public void createDiscover(int x, int y, String movingDirection) throws AlreadyOccupedLocationException, OutOfGridException, GridLimitReachException  {
 		if((this.discoversOnTheGrid.size() < this.maxLotation)) {
 			if(isInsideLimit(x, y)) {
@@ -89,6 +104,10 @@ public class Grid {
 		}
 	}
 
+	/**
+	 * Obtenção de todas as sondas da malha.
+	 * @return
+	 */
 	public ArrayList<Discover> getDiscoversOnTheGrid() {
 		return this.discoversOnTheGrid;
 	}
