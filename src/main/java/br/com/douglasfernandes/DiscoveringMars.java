@@ -3,6 +3,7 @@ package br.com.douglasfernandes;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import br.com.douglasfernandes.gui.MainFrame;
 import br.com.douglasfernandes.models.RxTxTech;
 
 /**
@@ -13,10 +14,17 @@ import br.com.douglasfernandes.models.RxTxTech;
 public class DiscoveringMars {
 
 	/**
-	 * Método de execução principal.
-	 * @param args
+	 * Usando aplicação com gráficos.
 	 */
-	public static void main(String[] args) {
+	private static void callGUIApp() {
+		MainFrame mainFrame = new MainFrame();
+		mainFrame.setVisible(true);
+	}
+	
+	/**
+	 * Usando aplicação via console.
+	 */
+	private static void callConsoleApp() {
 		System.out.println("Por gentileza, informe o arquivo com a origem dos dados.(Ex.: C:/DiscoveringMars/input-card.txt)");
 		System.out.println("Ou digite os commandos e digite \"pronto\" quando estiver pronto:\n");
 		System.out.print("Entrada: ");
@@ -66,6 +74,29 @@ public class DiscoveringMars {
 		
 		//Encerramento da aplicação.
 		System.exit(0);
+	}
+	
+	/**
+	 * Método de execução principal.
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		boolean callConsole = false;
+		
+		if(args != null && args.length > 0) {
+			for(String arg : args) {
+				if(arg.contains("uses-console")) {
+					callConsole = true;
+				}
+			}
+		}
+		
+		if(callConsole) {
+			callConsoleApp();
+		}
+		else {
+			callGUIApp();
+		}
 	}
 
 }

@@ -110,6 +110,8 @@ public class RxTxTech {
 			}
 		}
 		
+		this.commands = new ArrayList<String>();
+		
 		ArrayList<String> result = new ArrayList<String>();
 		
 		int discoverIndex = 0;

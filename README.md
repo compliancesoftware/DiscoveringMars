@@ -4,7 +4,7 @@ Uma missão em Marte (Cappta)
 # How To
 Acesse a pasta "Get Here" onde achará o arquivo "DiscoveringMars.jar" e o arquivo "teste.txt".
 A aplicação foi desenvolvida em Java e é executável via console através do seguinte comando:
-java -cp "DiscoveringMars.jar" br.com.douglasfernandes.DiscoveringMars
+java -jar "DiscoveringMars.jar" --uses-console
 
 Dentro da aplicação é possível passar as intruções linha a linha(digitando) ou passar o caminho para ler um arquivo de entrada que contenha as mesmas instruções.
 
@@ -36,3 +36,11 @@ MMRMMRMRRM
 1 3 N
 
 5 1 E
+
+# BONUS
+
+É possível utilizar a aplicação em modo gráfico, basta abrir o arquivo "DiscoveringMars.jar" utilizando a Java JVM ou simplesmente executar p comando java -jar "DiscoveringMars.jar" e se divertir.
+
+![Import](abrir_com.PNG)
+
+![Import](grafico.PNG)

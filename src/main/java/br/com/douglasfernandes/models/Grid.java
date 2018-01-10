@@ -62,7 +62,7 @@ public class Grid {
 	 * @return
 	 */
 	public boolean isInsideLimit(int x, int y) {
-		if(x >= this.xMinPosition && x <= this.xMaxPosition && y >= this.yMinPosition && y <= this.yMaxPosition) {
+		if(x >= this.xMinPosition && x < this.xMaxPosition && y >= this.yMinPosition && y < this.yMaxPosition) {
 			return true;
 		}
 		else {
@@ -112,4 +112,19 @@ public class Grid {
 		return this.discoversOnTheGrid;
 	}
 	
+	/**
+	 * Obetenção do limite máximo no eixo X.
+	 * @return
+	 */
+	public int getXMaxPosition() {
+		return this.xMaxPosition;
+	}
+	
+	/**
+	 * Obtenção do limite máximo no eixo Y.
+	 * @return
+	 */
+	public int getYMaxPosition() {
+		return this.xMaxPosition;
+	}
 }
