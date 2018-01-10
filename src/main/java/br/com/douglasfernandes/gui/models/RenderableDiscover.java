@@ -10,6 +10,11 @@ import br.com.douglasfernandes.models.Discover;
 import br.com.douglasfernandes.models.Discover.MovingDirection;
 import br.com.douglasfernandes.models.Grid;
 
+/**
+ * Sonda que pode ser desenhada em um JLabel para uso gráfico.
+ * @author douglas.f.filho
+ *
+ */
 public class RenderableDiscover extends JLabel {
 
 	/**
@@ -17,24 +22,40 @@ public class RenderableDiscover extends JLabel {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	// A sonda em si.
 	private Discover discover;
 	
+	// Fator de orientação do desenho no eixo X.
 	private int yFactor = 375;
 	
+	// Fator de orientação do desenho no eixo Y.
 	private int xFactor = 16;
 	
+	// Tamanho do desenho da sonda em pixel.
 	private int iconSize = 40;
 	
+	//Imegem da sonda apontando para Norte.
 	private Image iconN;
 	
+	//Imegem da sonda apontando para Sul.
 	private Image iconS;
 	
+	//Imegem da sonda apontando para Oeste.
 	private Image iconW;
 	
+	//Imegem da sonda apontando para Leste.
 	private Image iconE;
 	
+	// Malha onde será criada a sonda.
 	private Grid grid;
 	
+	/**
+	 * Construtor da Sonda.
+	 * @param positionX
+	 * @param positionY
+	 * @param movingDirection
+	 * @param grid
+	 */
 	public RenderableDiscover(int positionX, int positionY, String movingDirection, Grid grid) {
 		super();
 		
@@ -62,6 +83,9 @@ public class RenderableDiscover extends JLabel {
 		setIconDirection(movingDirection);
 	}
 	
+	/**
+	 * Auxilia na exibição da sonda na tela.
+	 */
 	private void renderDiscover() {
 		int gridType = this.grid.getXMaxPosition();
 		Discover discover = this.grid.getDiscoversOnTheGrid().get(0);
@@ -80,6 +104,10 @@ public class RenderableDiscover extends JLabel {
 		this.repaint();
 	}
 	
+	/**
+	 * Auxilia determinando qual imagem será usada para a sonda com base em sua direção.
+	 * @param movingDirection
+	 */
 	private void setIconDirection(String movingDirection) {
 		MovingDirection movDir = MovingDirection.getDirection(movingDirection);
 		
@@ -106,11 +134,18 @@ public class RenderableDiscover extends JLabel {
 		this.repaint();
 	}
 	
+	/**
+	 * Ratacionar a sonda para direita 'R' ou para esquerda 'L'.
+	 * @param rotationDirection
+	 */
 	public void rotateTo(String rotationDirection) {
 		this.discover.rotate(rotationDirection);
 		setIconDirection(this.discover.getDirection());
 	}
 	
+	/**
+	 * Mover a sonda para frente.
+	 */
 	public void move() {
 		this.discover.move(grid);
 		renderDiscover();

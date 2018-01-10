@@ -1,7 +1,6 @@
 package br.com.douglasfernandes.gui;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -20,79 +19,95 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import br.com.douglasfernandes.gui.models.RenderableDiscover;
+import br.com.douglasfernandes.gui.utils.AlertDialog;
 import br.com.douglasfernandes.models.Grid;
 
+/**
+ * Interface gráfica que opera a maioria das funcionalidades da aplicação DiscoveringMars
+ * @author douglas.f.filho
+ *
+ */
 public class MainFrame extends JFrame {
 
 	/**
-	 * 
+	 * auto generated serial uid.
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	// Painel principal (raiz)
 	private JPanel contentPane;
 	
+	// Painel de gráficos (contém a malha e a sonda)
 	private JPanel graphicsPanel;
 	
-	private Grid grid;
-
+	// Painel onde é controlada a sonda.
 	private JPanel controlPanel;
 
+	// Vira a sonda pra esquerda.
 	private JButton btnL;
 
+	// Vira a sonda pra direita.
 	private JButton btnR;
 
+	// Move a sonda pra frente.
 	private JButton btnMove;
 
+	// Imagem de frundo do controle.
 	private JLabel lblController;
 
+	// Painel onde são efetuadas as operações que inicialização a malha.
 	private JPanel starterPanel;
 
+	// Label de descrição do tamanho da malha.
 	private JLabel lblGridSize;
 
+	// Campo de escolha do tamanho da malha.
 	private JSpinner spnGridSize;
 
+	// Botão que executa a criação da malha com base noseu tamanho.
 	private JButton btnCreateGrid;
 
+	// Painel onde ficam as intruções de adição de uma sonda à malha.
 	private JPanel instructionsPanel;
 
+	// Label descritivo da posição inicial da sonda no eixo X.
 	private JLabel lblInitialPositionX;
 
+	// Campo onde é definida a posição inicial da sonda no eixo X.
 	private JSpinner initialPositionXSpn;
 
+	// Campo onde é definida a posição inicial da sonda no eixo Y.
 	private JSpinner initialPositionYSpn;
 
+	// Label descritivo da posição inicial da sonda no eixo Y.
 	private JLabel lblInitialPositionY;
 
+	// Botão para criar a sonda na malha.
 	private JButton btnCreateDiscover;
 	
+	// Imagem de fundo da malha.
 	private JLabel lblGridImage;
 
+	// Sonda.
 	private RenderableDiscover lblDiscover;
 
+	// Painel onde circulam as sondas (visualmente sobre o painel da malha)
 	private JPanel discoversPanel;
+	
+	// Label descritivo da orientação inicial da sonda. 
 	private JLabel lblOrientation;
+	
+	// Campo onde é definida a orientação inicial da sonda.
 	private JSpinner spnInitialOrientation;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainFrame frame = new MainFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	// Malha.
+	private Grid grid;
 	
 	/**
-	 * Create the frame.
+	 * Criação da tela.
 	 */
 	public MainFrame() {
+		// Definições básicas do comportamento e dimensões da tela.
 		setResizable(false);
 		setTitle("DiscoveringMars v1.0");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -102,12 +117,14 @@ public class MainFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		// Criação do painel de controle da sonda.
 		controlPanel = new JPanel();
 		controlPanel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		controlPanel.setBounds(0, 0, 327, 266);
 		contentPane.add(controlPanel);
 		controlPanel.setLayout(null);
 		
+		// BOTÃO 'ESQUERDA'
 		btnL = new JButton("L");
 		btnL.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -115,7 +132,8 @@ public class MainFrame extends JFrame {
 					try {
 						lblDiscover.rotateTo("L");
 					} catch(RuntimeException ex) {
-						System.out.println("Erro: "+ex.getMessage());
+						
+						AlertDialog.show(ex.getMessage());
 					}
 				}
 			}
@@ -127,6 +145,7 @@ public class MainFrame extends JFrame {
 		btnL.setMargin(null);
 		controlPanel.add(btnL);
 		
+		// BOTÃO 'DIREITA'
 		btnR = new JButton("R");
 		btnR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -134,7 +153,8 @@ public class MainFrame extends JFrame {
 					try {
 						lblDiscover.rotateTo("R");
 					} catch(RuntimeException ex) {
-						System.out.println("Erro: "+ex.getMessage());
+						
+						AlertDialog.show(ex.getMessage());
 					}
 				}
 			}
@@ -146,6 +166,7 @@ public class MainFrame extends JFrame {
 		btnR.setMargin(null);
 		controlPanel.add(btnR);
 		
+		// BOTÃO 'MOVER'
 		btnMove = new JButton("MOVE");
 		btnMove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -153,7 +174,8 @@ public class MainFrame extends JFrame {
 					try {
 						lblDiscover.move();
 					} catch(RuntimeException ex) {
-						System.out.println("Erro: "+ex.getMessage());
+						
+						AlertDialog.show(ex.getMessage());
 					}
 				}
 			}
@@ -165,6 +187,7 @@ public class MainFrame extends JFrame {
 		btnMove.setMargin(null);
 		controlPanel.add(btnMove);
 		
+		// Criação da imagem do Controle
 		lblController = new JLabel("Controller");
 		Image image = Toolkit.getDefaultToolkit().createImage(this.getClass().getClassLoader().getResource("br/com/douglasfernandes/gui/images/controller.png"));
 		image = image.getScaledInstance(308, 240,  java.awt.Image.SCALE_SMOOTH);
@@ -173,22 +196,26 @@ public class MainFrame extends JFrame {
 		lblController.setBounds(10, 11, 307, 244);
 		controlPanel.add(lblController);
 		
+		// Criação do painel das sondas
 		discoversPanel = new JPanel();
 		discoversPanel.setBounds(326, 0, 432, 425);
 		discoversPanel.setOpaque(false);
 		contentPane.add(discoversPanel);
 		discoversPanel.setLayout(null);
 		
+		// Criação do painel da malha.
 		graphicsPanel = new JPanel();
 		graphicsPanel.setBorder(new LineBorder(new Color(0, 0, 0), 5));
 		graphicsPanel.setBounds(326, 0, 432, 425);
 		contentPane.add(graphicsPanel);
 		graphicsPanel.setLayout(null);
 		
+		// Criação da imagem da malha.
 		lblGridImage = new JLabel("");
 		lblGridImage.setBounds(15, 15, 400, 400);
 		graphicsPanel.add(lblGridImage);
 		
+		// Criação do painel iicializador da malha.
 		starterPanel = new JPanel();
 		starterPanel.setBounds(0, 266, 326, 144);
 		contentPane.add(starterPanel);
@@ -198,11 +225,13 @@ public class MainFrame extends JFrame {
 		lblGridSize.setBounds(56, 28, 170, 14);
 		starterPanel.add(lblGridSize);
 		
+		// Criação de malhas disponíveis.
 		spnGridSize = new JSpinner();
 		spnGridSize.setModel(new SpinnerListModel(new String[] {"4 x 4", "6 x 6", "8 x 8", "10 x 10"}));
 		spnGridSize.setBounds(226, 25, 72, 20);
 		starterPanel.add(spnGridSize);
 		
+		// BOTÃO 'CRIAR MALHA'
 		btnCreateGrid = new JButton("Criar Malha");
 		btnCreateGrid.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -232,6 +261,7 @@ public class MainFrame extends JFrame {
 		btnCreateGrid.setBounds(139, 93, 130, 23);
 		starterPanel.add(btnCreateGrid);
 		
+		// Craiçãod o painel de criação de sonda.
 		instructionsPanel = new JPanel();
 		instructionsPanel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		instructionsPanel.setBounds(0, 266, 326, 144);
@@ -254,33 +284,39 @@ public class MainFrame extends JFrame {
 		lblInitialPositionY.setBounds(45, 42, 170, 14);
 		instructionsPanel.add(lblInitialPositionY);
 		
+		// BOTÃO 'HOSPEDAR SONDA'
 		btnCreateDiscover = new JButton("Hospedar Sonda");
 		btnCreateDiscover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int initialPosX = (Integer)initialPositionXSpn.getValue();
-				int initialPosY = (Integer)initialPositionYSpn.getValue();
-				
-				String initialOrientation = (String) spnInitialOrientation.getValue();
-				if(initialOrientation.equals("Norte")) {
-					initialOrientation = "N";
+				try {
+					int initialPosX = (Integer)initialPositionXSpn.getValue();
+					int initialPosY = (Integer)initialPositionYSpn.getValue();
+					
+					String initialOrientation = (String) spnInitialOrientation.getValue();
+					if(initialOrientation.equals("Norte")) {
+						initialOrientation = "N";
+					}
+					else if(initialOrientation.equals("Sul")) {
+						initialOrientation = "S";
+					}
+					else if(initialOrientation.equals("Leste")) {
+						initialOrientation = "E";
+					}
+					else if(initialOrientation.equals("Oeste")) {
+						initialOrientation = "W";
+					}
+					
+					lblDiscover = new RenderableDiscover(initialPosX, initialPosY, initialOrientation, grid);
+					discoversPanel.add(lblDiscover);
+					lblDiscover.setVisible(false);
+					
+					lblDiscover.setVisible(true);
+					lblDiscover.repaint();
+					instructionsPanel.setVisible(false);
+				} catch (RuntimeException ex) {
+					
+					AlertDialog.show(ex.getMessage());
 				}
-				else if(initialOrientation.equals("Sul")) {
-					initialOrientation = "S";
-				}
-				else if(initialOrientation.equals("Leste")) {
-					initialOrientation = "E";
-				}
-				else if(initialOrientation.equals("Oeste")) {
-					initialOrientation = "W";
-				}
-				
-				lblDiscover = new RenderableDiscover(initialPosX, initialPosY, initialOrientation, grid);
-				discoversPanel.add(lblDiscover);
-				lblDiscover.setVisible(false);
-				
-				lblDiscover.setVisible(true);
-				lblDiscover.repaint();
-				instructionsPanel.setVisible(false);
 			}
 		});
 		btnCreateDiscover.setBounds(135, 111, 140, 23);
@@ -298,6 +334,10 @@ public class MainFrame extends JFrame {
 		instructionsPanel.setVisible(false);
 	}
 	
+	/**
+	 * Verifica se pode mover a sonda criada na malha.
+	 * @return
+	 */
 	private boolean canMove() {
 		if(grid != null && grid.getDiscoversOnTheGrid().size() > 0) {
 			return true;
@@ -308,7 +348,7 @@ public class MainFrame extends JFrame {
 	}
 	
 	/**
-	 * Redering grid to gridPanel
+	 * Renderização da malha.
 	 * @param xMaxPosition
 	 * @param yMaxPosition
 	 */
