@@ -221,7 +221,7 @@ public class MainFrame extends JFrame {
 		contentPane.add(starterPanel);
 		starterPanel.setLayout(null);
 		
-		lblGridSize = new JLabel("Tamanho do eixo Y:");
+		lblGridSize = new JLabel("Tamanho da Malha:");
 		lblGridSize.setBounds(56, 28, 170, 14);
 		starterPanel.add(lblGridSize);
 		
@@ -258,7 +258,7 @@ public class MainFrame extends JFrame {
 				renderGrid(xSize, ySize);
 			}
 		});
-		btnCreateGrid.setBounds(139, 93, 130, 23);
+		btnCreateGrid.setBounds(168, 53, 130, 23);
 		starterPanel.add(btnCreateGrid);
 		
 		// Craiçãod o painel de criação de sonda.
