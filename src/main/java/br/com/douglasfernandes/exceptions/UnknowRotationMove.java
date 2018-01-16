@@ -5,14 +5,14 @@ package br.com.douglasfernandes.exceptions;
  * @author douglas.f.filho
  *
  */
-public class UnknowRotationDirection extends RuntimeException{
+public class UnknowRotationMove extends RuntimeException{
 
 	/**
 	 * Auto genertaed serial uid.
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public UnknowRotationDirection() {
+	public UnknowRotationMove() {
 		super("Movimento desconhecido: Digite \"L\" para esquerda ou \"R\" para direita.");
 	}
 

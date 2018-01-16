@@ -5,14 +5,14 @@ package br.com.douglasfernandes.exceptions;
  * @author douglas.f.filho
  *
  */
-public class RiskOfDiscoverCollisionException extends RuntimeException{
+public class RiskOfDiscovererCollisionException extends RuntimeException{
 
 	/**
 	 * auto generated serial uid.
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public RiskOfDiscoverCollisionException() {
+	public RiskOfDiscovererCollisionException() {
 		super("Impossível mover a sonda por haver risco de colisão com outras sondas.");
 	}
 	

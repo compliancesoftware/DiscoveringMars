@@ -6,6 +6,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,98 +20,167 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import br.com.douglasfernandes.gui.models.RenderableDiscover;
+import br.com.douglasfernandes.gui.models.GUIDataTransmitter;
+import br.com.douglasfernandes.gui.models.GridPoint;
+import br.com.douglasfernandes.gui.models.RenderableDiscoverer;
 import br.com.douglasfernandes.gui.utils.AlertDialog;
-import br.com.douglasfernandes.models.Grid;
+import br.com.douglasfernandes.gui.utils.ViewFactorConstants;
+import br.com.douglasfernandes.models.DataTransmitter;
 
 /**
- * Interface gráfica que opera a maioria das funcionalidades da aplicação DiscoveringMars
+ * Interface gráfica que opera as funcionalidades da aplicação DiscoveringMars
  * @author douglas.f.filho
  *
  */
 public class MainFrame extends JFrame {
 
 	/**
-	 * auto generated serial uid.
+	 * Auto generated serial uid.
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	// Painel principal (raiz)
+	/**
+	 * Painel principal (raiz)
+	 */
 	private JPanel contentPane;
 	
-	// Painel de gráficos (contém a malha e a sonda)
+	/**
+	 * Painel de gráficos (contém o plano e seus pontos ativos)
+	 */
 	private JPanel graphicsPanel;
 	
-	// Painel onde é controlada a sonda.
+	/**
+	 * Painel onde é desenhado o controle das sondas.
+	 */
 	private JPanel controlPanel;
 
-	// Vira a sonda pra esquerda.
+	/**
+	 * Botão que executa o comando de virar a sonda pra esquerda.
+	 */
 	private JButton btnL;
 
-	// Vira a sonda pra direita.
+	/**
+	 * Botão que executa o comando de virar a sonda pra direita.
+	 */
 	private JButton btnR;
 
-	// Move a sonda pra frente.
+	/**
+	 * Botão que executa o comando de mover a sonda pra frente.
+	 */
 	private JButton btnMove;
 
-	// Imagem de frundo do controle.
+	/**
+	 * Imagem do controle da sonda (que é adicionada ao controlPanel).
+	 */
 	private JLabel lblController;
 
-	// Painel onde são efetuadas as operações que inicialização a malha.
+	/**
+	 * Painel onde são efetuadas as operações que inicialização do plano.
+	 */
 	private JPanel starterPanel;
 
-	// Label de descrição do tamanho da malha.
+	/**
+	 * Label de descrição do tamanho do plano.
+	 */
 	private JLabel lblGridSize;
 
-	// Campo de escolha do tamanho da malha.
-	private JSpinner spnGridSize;
-
-	// Botão que executa a criação da malha com base noseu tamanho.
+	/**
+	 * Botão que executa a operação de criação do plano com base nos limites informados.
+	 */
 	private JButton btnCreateGrid;
 
-	// Painel onde ficam as intruções de adição de uma sonda à malha.
+	/**
+	 * Painel onde ficam as instruções de adição de uma sonda ao plano.
+	 */
 	private JPanel instructionsPanel;
 
-	// Label descritivo da posição inicial da sonda no eixo X.
+	/**
+	 * Descrição da posição inicial da sonda no eixo X.
+	 */
 	private JLabel lblInitialPositionX;
 
-	// Campo onde é definida a posição inicial da sonda no eixo X.
-	private JSpinner initialPositionXSpn;
+	/**
+	 * Definição da posição inicial da sonda no eixo X.
+	 */
+	private JSpinner spnInitialPositionX;
 
-	// Campo onde é definida a posição inicial da sonda no eixo Y.
-	private JSpinner initialPositionYSpn;
+	/**
+	 * Definição da posição inicial da sonda no eixo Y.
+	 */
+	private JSpinner spnInitialPositionY;
 
-	// Label descritivo da posição inicial da sonda no eixo Y.
+	/**
+	 * Descrição da posição inicial da sonda no eixo Y.
+	 */
 	private JLabel lblInitialPositionY;
 
-	// Botão para criar a sonda na malha.
+	/**
+	 * Botão que executa a operação de adição de uma sonda no plano.
+	 */
 	private JButton btnCreateDiscover;
 	
-	// Imagem de fundo da malha.
+	/**
+	 * Imagem de fundo do plano.
+	 */
 	private JLabel lblGridImage;
 
-	// Sonda.
-	private RenderableDiscover lblDiscover;
-
-	// Painel onde circulam as sondas (visualmente sobre o painel da malha)
+	/**
+	 * Painel onde circulam as sondas (visualmente, sobre o painel do plano)
+	 */
 	private JPanel discoversPanel;
 	
-	// Label descritivo da orientação inicial da sonda. 
+	/**
+	 * Descrição da orientação inicial da sonda. 
+	 */
 	private JLabel lblOrientation;
 	
-	// Campo onde é definida a orientação inicial da sonda.
+	/**
+	 * Campo onde é definida a orientação inicial da sonda.
+	 */
 	private JSpinner spnInitialOrientation;
 
-	// Malha.
-	private Grid grid;
+	/**
+	 * Tamanho máximo para criação do plano no eixo X.
+	 */
+	private JSpinner spnGridSizeX;
+
+	/**
+	 * Descrição para o tamanho máximo para criação do plano no eixo X.
+	 */
+	private JLabel lblMaxX;
+
+	/**
+	 * Descrição para o tamanho máximo para criação do plano no eixo Y.
+	 */
+	private JLabel lblMaxY;
+
+	/**
+	 * Tamanho máximo para criação do plano no eixo Y.
+	 */
+	private JSpinner spnGridSizeY;
+
+	/**
+	 * Painel onde são criados os pontos do plano.
+	 */
+	private JPanel gridPanel;
 	
 	/**
-	 * Criação da tela.
+	 * Implementação do transmissor/receptor de informações das sondas no plano para aplicação gráfica.
+	 */
+	private DataTransmitter transmitter;
+	
+	/**
+	 * Sonda selecionada no plano.
+	 */
+	private RenderableDiscoverer selected = null;
+	
+	/**
+	 * Construtor principal da interface.
 	 */
 	public MainFrame() {
 		// Definições básicas do comportamento e dimensões da tela.
 		setResizable(false);
-		setTitle("DiscoveringMars v1.0");
+		setTitle("DiscoveringMars");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 774, 464);
 		contentPane = new JPanel();
@@ -117,7 +188,7 @@ public class MainFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		// Criação do painel de controle da sonda.
+		// Criação do painel do controle das sondas.
 		controlPanel = new JPanel();
 		controlPanel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		controlPanel.setBounds(0, 0, 327, 266);
@@ -130,9 +201,8 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(canMove()) {
 					try {
-						lblDiscover.rotateTo("L");
+						transmitter.moveSelectedDiscoverer("L");
 					} catch(RuntimeException ex) {
-						
 						AlertDialog.show(ex.getMessage());
 					}
 				}
@@ -151,9 +221,8 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(canMove()) {
 					try {
-						lblDiscover.rotateTo("R");
+						transmitter.moveSelectedDiscoverer("R");
 					} catch(RuntimeException ex) {
-						
 						AlertDialog.show(ex.getMessage());
 					}
 				}
@@ -172,9 +241,8 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(canMove()) {
 					try {
-						lblDiscover.move();
+						transmitter.moveSelectedDiscoverer("M");
 					} catch(RuntimeException ex) {
-						
 						AlertDialog.show(ex.getMessage());
 					}
 				}
@@ -200,71 +268,99 @@ public class MainFrame extends JFrame {
 		discoversPanel = new JPanel();
 		discoversPanel.setBounds(326, 0, 432, 425);
 		discoversPanel.setOpaque(false);
+		discoversPanel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int xFramePos = e.getX() - ViewFactorConstants.X_COMPENSATION;
+				int yFramePos = e.getY() - ViewFactorConstants.X_COMPENSATION;
+				
+				int xPos = xFramePos/40;
+				int yPos = 9 - (yFramePos/40);
+				if(transmitter != null && transmitter.hasValidGrid()) {
+					spnInitialPositionX.setValue(xPos);
+					spnInitialPositionY.setValue(yPos);
+					
+					selected = (RenderableDiscoverer)transmitter.getDiscovererAtPosition(xPos, yPos);
+					transmitter.setSelectedDiscoverer(selected);
+				}
+				else {
+					spnGridSizeX.setValue(xPos + 1);
+					spnGridSizeY.setValue(yPos + 1);
+				}
+			}
+		});
 		contentPane.add(discoversPanel);
 		discoversPanel.setLayout(null);
 		
-		// Criação do painel da malha.
+		// Criação do painel de pontos do plano
+		gridPanel = new JPanel();
+		gridPanel.setBounds(326, 0, 432, 425);
+		gridPanel.setOpaque(false);
+		contentPane.add(gridPanel);
+		gridPanel.setLayout(null);
+				
+		// Criação do painel do plano.
 		graphicsPanel = new JPanel();
 		graphicsPanel.setBorder(new LineBorder(new Color(0, 0, 0), 5));
 		graphicsPanel.setBounds(326, 0, 432, 425);
 		contentPane.add(graphicsPanel);
 		graphicsPanel.setLayout(null);
 		
-		// Criação da imagem da malha.
+		// Criação da imagem de fundo plano.
 		lblGridImage = new JLabel("");
 		lblGridImage.setBounds(15, 15, 400, 400);
+		String gridName = "br/com/douglasfernandes/gui/images/malha.png";
+		Image gridImage = Toolkit.getDefaultToolkit().createImage(this.getClass().getClassLoader().getResource(gridName));
+		image = gridImage.getScaledInstance(400, 400,  java.awt.Image.SCALE_SMOOTH);
+		ImageIcon gridIcon = new ImageIcon(image);
+		lblGridImage.setIcon(gridIcon);
 		graphicsPanel.add(lblGridImage);
 		
-		// Criação do painel iicializador da malha.
+		// Criação do painel inicializador do plano.
 		starterPanel = new JPanel();
-		starterPanel.setBounds(0, 266, 326, 144);
+		starterPanel.setBounds(0, 266, 326, 159);
 		contentPane.add(starterPanel);
 		starterPanel.setLayout(null);
 		
 		lblGridSize = new JLabel("Tamanho da Malha:");
-		lblGridSize.setBounds(56, 28, 170, 14);
+		lblGridSize.setBounds(10, 11, 288, 14);
 		starterPanel.add(lblGridSize);
-		
-		// Criação de malhas disponíveis.
-		spnGridSize = new JSpinner();
-		spnGridSize.setModel(new SpinnerListModel(new String[] {"4 x 4", "6 x 6", "8 x 8", "10 x 10"}));
-		spnGridSize.setBounds(226, 25, 72, 20);
-		starterPanel.add(spnGridSize);
 		
 		// BOTÃO 'CRIAR MALHA'
 		btnCreateGrid = new JButton("Criar Malha");
 		btnCreateGrid.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String gridSize = (String) spnGridSize.getValue();
-				
-				int xSize = 4;
-				int ySize = 4;
-				
-				if(gridSize.contains("6")) {
-					xSize = 6;
-					ySize = 6;
-				}
-				
-				if(gridSize.contains("8")) {
-					xSize = 8;
-					ySize = 8;
-				}
-				
-				if(gridSize.contains("10")) {
-					xSize = 10;
-					ySize = 10;
-				}
+				int xSize = (Integer)spnGridSizeX.getValue();
+				int ySize = (Integer)spnGridSizeY.getValue();
 				
 				renderGrid(xSize, ySize);
 			}
 		});
-		btnCreateGrid.setBounds(168, 53, 130, 23);
+		btnCreateGrid.setBounds(168, 24, 130, 47);
 		starterPanel.add(btnCreateGrid);
 		
-		// Craiçãod o painel de criação de sonda.
+		spnGridSizeX = new JSpinner();
+		spnGridSizeX.setModel(new SpinnerNumberModel(1, 1, 10, 1));
+		spnGridSizeX.setBounds(66, 25, 45, 20);
+		starterPanel.add(spnGridSizeX);
+		
+		lblMaxX = new JLabel("Max X:");
+		lblMaxX.setBounds(10, 28, 46, 14);
+		starterPanel.add(lblMaxX);
+		
+		lblMaxY = new JLabel("Max Y:");
+		lblMaxY.setBounds(10, 57, 46, 14);
+		starterPanel.add(lblMaxY);
+		
+		spnGridSizeY = new JSpinner();
+		spnGridSizeY.setModel(new SpinnerNumberModel(1, 1, 10, 1));
+		spnGridSizeY.setBounds(66, 54, 45, 20);
+		starterPanel.add(spnGridSizeY);
+		
+		// Criação do painel de adição de sondas.
 		instructionsPanel = new JPanel();
 		instructionsPanel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		instructionsPanel.setBounds(0, 266, 326, 144);
+		instructionsPanel.setBounds(0, 266, 326, 159);
 		contentPane.add(instructionsPanel);
 		instructionsPanel.setLayout(null);
 		
@@ -272,13 +368,13 @@ public class MainFrame extends JFrame {
 		lblInitialPositionX.setBounds(45, 14, 170, 14);
 		instructionsPanel.add(lblInitialPositionX);
 		
-		initialPositionXSpn = new JSpinner();
-		initialPositionXSpn.setBounds(225, 11, 50, 20);
-		instructionsPanel.add(initialPositionXSpn);
+		spnInitialPositionX = new JSpinner();
+		spnInitialPositionX.setBounds(225, 11, 50, 20);
+		instructionsPanel.add(spnInitialPositionX);
 		
-		initialPositionYSpn = new JSpinner();
-		initialPositionYSpn.setBounds(225, 39, 50, 20);
-		instructionsPanel.add(initialPositionYSpn);
+		spnInitialPositionY = new JSpinner();
+		spnInitialPositionY.setBounds(225, 39, 50, 20);
+		instructionsPanel.add(spnInitialPositionY);
 		
 		lblInitialPositionY = new JLabel("Posi\u00E7\u00E3o inicial Y:");
 		lblInitialPositionY.setBounds(45, 42, 170, 14);
@@ -289,8 +385,8 @@ public class MainFrame extends JFrame {
 		btnCreateDiscover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					int initialPosX = (Integer)initialPositionXSpn.getValue();
-					int initialPosY = (Integer)initialPositionYSpn.getValue();
+					int initialPosX = (Integer)spnInitialPositionX.getValue();
+					int initialPosY = (Integer)spnInitialPositionY.getValue();
 					
 					String initialOrientation = (String) spnInitialOrientation.getValue();
 					if(initialOrientation.equals("Norte")) {
@@ -306,20 +402,18 @@ public class MainFrame extends JFrame {
 						initialOrientation = "W";
 					}
 					
-					lblDiscover = new RenderableDiscover(initialPosX, initialPosY, initialOrientation, grid);
-					discoversPanel.add(lblDiscover);
-					lblDiscover.setVisible(false);
+					transmitter.addDiscoverer(initialPosX, initialPosY, initialOrientation);
+					selected = (RenderableDiscoverer)transmitter.getSelected();
+					discoversPanel.add(selected);
 					
-					lblDiscover.setVisible(true);
-					lblDiscover.repaint();
-					instructionsPanel.setVisible(false);
+					selected.setVisible(true);
+					selected.repaint();
 				} catch (RuntimeException ex) {
-					
 					AlertDialog.show(ex.getMessage());
 				}
 			}
 		});
-		btnCreateDiscover.setBounds(135, 111, 140, 23);
+		btnCreateDiscover.setBounds(45, 92, 230, 56);
 		instructionsPanel.add(btnCreateDiscover);
 		
 		lblOrientation = new JLabel("Orienta\u00E7\u00E3o:");
@@ -335,11 +429,11 @@ public class MainFrame extends JFrame {
 	}
 	
 	/**
-	 * Verifica se pode mover a sonda criada na malha.
+	 * Verifica se pode mover a sonda criada no plano.
 	 * @return
 	 */
 	private boolean canMove() {
-		if(grid != null && grid.getDiscoversOnTheGrid().size() > 0) {
+		if(this.transmitter != null && this.transmitter.hasValidGrid() && this.selected != null) {
 			return true;
 		}
 		else {
@@ -348,24 +442,24 @@ public class MainFrame extends JFrame {
 	}
 	
 	/**
-	 * Renderização da malha.
-	 * @param xMaxPosition
-	 * @param yMaxPosition
+	 * Renderização dos pontos no plano.
+	 * @param xMaxPosition Tamanho máximo do plano do eixo X.
+	 * @param yMaxPosition Tamanh máximo do plano no eixo Y.
 	 */
 	private void renderGrid(int xMaxPosition, int yMaxPosition) {
-		System.out.println("Creating grid with params: x(" + xMaxPosition + "),y(" + yMaxPosition + ")");
-		grid = new Grid(xMaxPosition, yMaxPosition);
+		transmitter = GUIDataTransmitter.getInstance();
+		transmitter.createGrid(xMaxPosition, yMaxPosition);
 		
-		initialPositionXSpn.setModel(new SpinnerNumberModel(0, 0, (xMaxPosition - 1), 1));
-		initialPositionYSpn.setModel(new SpinnerNumberModel(0, 0, (xMaxPosition - 1), 1));
+		spnInitialPositionX.setModel(new SpinnerNumberModel(0, 0, (xMaxPosition - 1), 1));
+		spnInitialPositionY.setModel(new SpinnerNumberModel(0, 0, (yMaxPosition - 1), 1));
 		
-		String gridName = "br/com/douglasfernandes/gui/images/malha" + xMaxPosition + ".png";
-		Image image = Toolkit.getDefaultToolkit().createImage(this.getClass().getClassLoader().getResource(gridName));
-		image = image.getScaledInstance(400, 400,  java.awt.Image.SCALE_SMOOTH);
-		ImageIcon icon = new ImageIcon(image);
-		lblGridImage.setIcon(icon);
-		
-		lblGridImage.repaint();
+		for(int i = 0;i < xMaxPosition;i++) {
+			for(int j = 0;j < yMaxPosition;j++) {
+				GridPoint point = new GridPoint(i, j);
+				gridPanel.add(point);
+				point.repaint();
+			}
+		}
 		
 		starterPanel.setVisible(false);
 		instructionsPanel.setVisible(true);
