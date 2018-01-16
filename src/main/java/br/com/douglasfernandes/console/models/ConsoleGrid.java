@@ -1,4 +1,4 @@
-package br.com.douglasfernandes.models.impl;
+package br.com.douglasfernandes.console.models;
 
 import java.util.ArrayList;
 
@@ -8,7 +8,7 @@ import br.com.douglasfernandes.exceptions.OutOfGridException;
 import br.com.douglasfernandes.models.Discoverer;
 import br.com.douglasfernandes.models.Grid;
 
-public class GridImpl implements Grid{
+public class ConsoleGrid implements Grid{
 	/**
 	 * Representação da posição mínima disponível no eixo X.
 	 */
@@ -49,7 +49,7 @@ public class GridImpl implements Grid{
 	 * @param xMaxPosition limite máximo do plano no eixo X.
 	 * @param yMaxPosition limite máximo do plano no eixo Y.
 	 */
-	private GridImpl(int xMaxPosition, int yMaxPosition) {
+	private ConsoleGrid(int xMaxPosition, int yMaxPosition) {
 		this.xMinPosition = 0;
 		this.yMinPosition = 0;
 		this.xMaxPosition = xMaxPosition;
@@ -64,7 +64,7 @@ public class GridImpl implements Grid{
 	 * @param yMaxPosition limite máximo do plano no eixo Y.
 	 */
 	public static Grid getInstance(int xMaxPosition, int yMaxPosition) {
-		return new GridImpl(xMaxPosition, yMaxPosition);
+		return new ConsoleGrid(xMaxPosition, yMaxPosition);
 	}
 	
 	/**
@@ -72,7 +72,7 @@ public class GridImpl implements Grid{
 	 * @param maxSize limite máximo do plano como um quadrado (X = Y = maxSize)
 	 */
 	public static Grid getInstance(int maxSize) {
-		return new GridImpl(maxSize, maxSize);
+		return new ConsoleGrid(maxSize, maxSize);
 	}
 	
 	@Override
@@ -87,7 +87,7 @@ public class GridImpl implements Grid{
 					throw new AlreadyOccupedLocationException();
 				}
 				else {
-					discoverer = DiscovererImpl.getInstance(X, Y, orientation);
+					discoverer = ConsoleDiscoverer.getInstance(X, Y, orientation);
 					this.discoversOnTheGrid.add(discoverer);
 					
 					return discoverer;

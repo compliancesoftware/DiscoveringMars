@@ -1,4 +1,4 @@
-package br.com.douglasfernandes.models.impl;
+package br.com.douglasfernandes.console.models;
 
 import br.com.douglasfernandes.exceptions.OutOfGridException;
 import br.com.douglasfernandes.exceptions.RiskOfDiscovererCollisionException;
@@ -9,7 +9,7 @@ import br.com.douglasfernandes.models.Grid;
 import br.com.douglasfernandes.models.utils.Orientation;
 import br.com.douglasfernandes.models.utils.RotationMove;
 
-public class DiscovererImpl implements Discoverer{
+public class ConsoleDiscoverer implements Discoverer{
 	/**
 	 * Representação da localização da sonda no plano em relação ao eixo X.
 	 */
@@ -31,7 +31,7 @@ public class DiscovererImpl implements Discoverer{
 	 * @param Y posição inicial da sonda no eixo Y
 	 * @param orientation orientação cardinal inicial da sonda
 	 */
-	private DiscovererImpl(int X, int Y, Orientation orientation) {
+	private ConsoleDiscoverer(int X, int Y, Orientation orientation) {
 		this.positionX = X;
 		this.positionY = Y;
 		this.orientation = orientation;
@@ -63,7 +63,7 @@ public class DiscovererImpl implements Discoverer{
 			throw new UnknowOrientation();
 		}
 		
-		return new DiscovererImpl(X, Y, newOrienation);
+		return new ConsoleDiscoverer(X, Y, newOrienation);
 	}
 	
 	@Override

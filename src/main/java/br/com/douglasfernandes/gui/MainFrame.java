@@ -25,6 +25,7 @@ import br.com.douglasfernandes.gui.models.GridPoint;
 import br.com.douglasfernandes.gui.models.RenderableDiscoverer;
 import br.com.douglasfernandes.gui.utils.AlertDialog;
 import br.com.douglasfernandes.gui.utils.ViewFactorConstants;
+import br.com.douglasfernandes.interfaces.UserInterface;
 import br.com.douglasfernandes.models.DataTransmitter;
 
 /**
@@ -32,7 +33,7 @@ import br.com.douglasfernandes.models.DataTransmitter;
  * @author douglas.f.filho
  *
  */
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame implements UserInterface{
 
 	/**
 	 * Auto generated serial uid.
@@ -432,13 +433,9 @@ public class MainFrame extends JFrame {
 	 * Verifica se pode mover a sonda criada no plano.
 	 * @return
 	 */
-	private boolean canMove() {
-		if(this.transmitter != null && this.transmitter.hasValidGrid() && this.selected != null) {
-			return true;
-		}
-		else {
-			return false;
-		}
+	@Override
+	public boolean canMove() {
+		return (this.transmitter != null && this.transmitter.hasValidGrid() && this.transmitter.getSelected() != null);
 	}
 	
 	/**
@@ -463,5 +460,10 @@ public class MainFrame extends JFrame {
 		
 		starterPanel.setVisible(false);
 		instructionsPanel.setVisible(true);
+	}
+
+	@Override
+	public void call() {
+		this.setVisible(true);
 	}
 }

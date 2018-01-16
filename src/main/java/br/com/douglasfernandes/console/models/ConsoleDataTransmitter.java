@@ -14,7 +14,6 @@ import br.com.douglasfernandes.exceptions.UnknowRotationMove;
 import br.com.douglasfernandes.models.DataTransmitter;
 import br.com.douglasfernandes.models.Discoverer;
 import br.com.douglasfernandes.models.Grid;
-import br.com.douglasfernandes.models.impl.GridImpl;
 import br.com.douglasfernandes.models.utils.ArrayUtil;
 import br.com.douglasfernandes.models.utils.CommandType;
 
@@ -119,10 +118,10 @@ public class ConsoleDataTransmitter implements DataTransmitter{
 	@Override
 	public void createGrid(int X, int Y) {
 		if(X == Y) {
-			this.grid = GridImpl.getInstance(X);
+			this.grid = ConsoleGrid.getInstance(X);
 		}
 		else {
-			this.grid = GridImpl.getInstance(X, Y);
+			this.grid = ConsoleGrid.getInstance(X, Y);
 		}
 	}
 

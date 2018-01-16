@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import br.com.douglasfernandes.console.models.ConsoleDataTransmitter;
+import br.com.douglasfernandes.interfaces.UserInterface;
 import br.com.douglasfernandes.models.DataTransmitter;
 import br.com.douglasfernandes.models.Discoverer;
 
@@ -18,7 +19,7 @@ import br.com.douglasfernandes.models.Discoverer;
  * @author douglas.f.filho
  *
  */
-public class ConsoleMainFrame {
+public class ConsoleMainFrame implements UserInterface{
 	/**
 	 * Objeto usado na transmissão e recepção de infromações para sondas no plano.
 	 */
@@ -115,6 +116,7 @@ public class ConsoleMainFrame {
 	/**
 	 * Executar aplicação.
 	 */
+	@Override
 	public void call() {
 		try {
 			this.requestEntry();
@@ -133,6 +135,11 @@ public class ConsoleMainFrame {
 		}
 		
 		System.exit(0);
+	}
+
+	@Override
+	public boolean canMove() {
+		return (this.transmitter != null && this.transmitter.hasValidGrid() && this.transmitter.getSelected() != null);
 	}
 	
 }
