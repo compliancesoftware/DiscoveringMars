@@ -131,7 +131,6 @@ public class ConsoleMainFrame implements UserInterface{
 			System.out.println("Erro: Comando inválido: "+ex.getMessage());
 		} catch(RuntimeException ex) {
 			System.out.println("Erro: "+ex.getMessage());
-			ex.printStackTrace();
 		}
 		
 		System.exit(0);
