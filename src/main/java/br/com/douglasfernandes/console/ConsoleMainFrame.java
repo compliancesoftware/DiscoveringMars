@@ -34,7 +34,7 @@ public class ConsoleMainFrame implements UserInterface{
 	 * Construtor principal da classe.
 	 */
 	public ConsoleMainFrame() {
-		this.transmitter = ConsoleDataTransmitter.getInstance();
+		this.transmitter = new ConsoleDataTransmitter();
 		this.commands = new ArrayList<String>();
 	}
 	

@@ -444,7 +444,7 @@ public class MainFrame extends JFrame implements UserInterface{
 	 * @param yMaxPosition Tamanh máximo do plano no eixo Y.
 	 */
 	private void renderGrid(int xMaxPosition, int yMaxPosition) {
-		transmitter = GUIDataTransmitter.getInstance();
+		transmitter = new GUIDataTransmitter();
 		transmitter.createGrid(xMaxPosition, yMaxPosition);
 		
 		spnInitialPositionX.setModel(new SpinnerNumberModel(0, 0, (xMaxPosition - 1), 1));
